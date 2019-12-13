@@ -4,6 +4,8 @@ const passport = require("passport");
 // 載入 user model
 const db = require("../models");
 const User = db.User;
+const bcrypt = require("bcryptjs");
+
 // 登入頁面
 router.get("/login", (req, res) => {
   res.render("login");
@@ -38,17 +40,26 @@ router.post("/register", (req, res) => {
         email,
         password
       });
-      newUser
-        .save()
-        .then(user => {
-          res.redirect("/"); // 新增完成導回首頁
-        })
-        .catch(err => console.log(err));
+      //hash the password
+      bcrypt.genSalt(10, (err, salt) => {
+        bcrypt.hash(newUser.password, salt, (err, hash) => {
+          if (err) throw err;
+          newUser.password = hash;
+          //save the new user
+          newUser
+            .save()
+            .then(user => {
+              res.redirect("/users/login");
+            })
+            .catch(err => console.log(err));
+        });
+      });
     }
   });
 });
 // 登出
 router.get("/logout", (req, res) => {
-  res.send("logout");
+  req.logout();
+  res.redirect("/users/login");
 });
 module.exports = router;
