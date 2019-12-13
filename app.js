@@ -6,6 +6,7 @@ const bodyParser = require("body-parser");
 const methodOverride = require("method-override");
 const session = require("express-session");
 const passport = require("passport");
+
 app.use(
   session({
     secret: "your secret key",
@@ -23,9 +24,6 @@ app.use(methodOverride("method"));
 const db = require("./models");
 const Todo = db.Todo;
 const User = db.User;
-app.get("/", (req, res) => {
-  res.send("hello world");
-});
 
 // 使用 Passport - 要在「使用路由器」前面
 app.use(passport.initialize());

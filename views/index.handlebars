@@ -1,0 +1,22 @@
+<a href="/todos/new" class="btn btn-outline-secondary " style="font-weight: bolder;color:white">Create</a>
+<ul class='list-group'>
+  {{#each todos}}
+  <li class="list-group-item">
+    <div class="row">
+      <div class="col-auto mr-auto align-item-center">
+        <input type="checkbox" name="done" {{#if this.done}}checked{{/if}} disabled>
+        <h4 class="d-inline">
+          {{{this.name}}}
+        </h4>
+      </div>
+      <div class="col-auto">
+        <a href='/todo/{{{this.id}}}' class="btn btn-secondary">detail</a>
+        <a href="/todo/{{{this.id}}}/edit" class='btn btn-success'>edit</a>
+        <form method="POST" action="/todo/{{{this.id}}}/delete?_method=DELETE" class="d-inline">
+          <button type="submit" class='btn btn-danger'>delete</button>
+        </form>
+      </div>
+    </div>
+  </li>
+  {{/each}}
+</ul>
