@@ -74,7 +74,7 @@ router.get("/:id/edit", authenticated, (req, res) => {
 });
 
 // 修改 Todo
-router.put("/:id", authenticated, (req, res) => {
+router.put("/:id/edit", authenticated, (req, res) => {
   Todo.findOne({
     where: {
       Id: req.params.id,
@@ -88,7 +88,7 @@ router.put("/:id", authenticated, (req, res) => {
       return todo.save();
     })
     .then(todo => {
-      return res.redirect(`/todos/${req.params.id}`);
+      return res.redirect(`/todo/${req.params.id}`);
     })
     .catch(error => {
       return res.status(422).json(error);
